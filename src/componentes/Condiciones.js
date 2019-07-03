@@ -10,11 +10,20 @@ var styles = {
   
 };
 
+/*var styles3 = {
+
+marginLeft:'25%',
+
+width:'50%'
+
+
+}*/
+
 var styles2 = {
 
   position: 'relative',
   left: '50%', 
-  top:'30%',
+  top:'50%',
   transform: 'translate(-50%, -50%)',
   width:'200%',
 
@@ -157,7 +166,7 @@ class Condiciones extends Component{
           
           <Link to="/Tabla">
           <div className="form-group">
-            <button onClick={() => this.props.metodoSimp(this.state,this.props.titulo.vars,this.props.titulo.res,this.props.titulo)} className="btn btn-success btn-block">
+            <button onClick={() => this.props.metodoSimp(this.state,this.props.titulo.vars,this.props.titulo.res,this.props.titulo)} className="btn btn-success btn-block" >
               ok
             </button>
           </div>

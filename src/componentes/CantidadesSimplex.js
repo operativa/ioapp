@@ -17,6 +17,14 @@ var styles2 = {
 
 }
 
+var styles = {
+
+  marginLeft:'60px',
+  marginTop:'20px',
+  width:'50%',
+
+}
+
 class CantidadesSimplex extends Component{
 
  
@@ -94,7 +102,7 @@ class CantidadesSimplex extends Component{
                       
           <div className="form-group">
             <Link to="/Condiciones">
-            <button ref={this.botonaso} type="submit" onClick={() => this.props.funcion(this.state)} className="btn btn-success btn-block">
+            <button type="submit" onClick={() => this.props.funcion(this.state)} className="btn btn-success btn-block" style={styles}>
               ok
             </button>
             </Link>
