@@ -17,7 +17,7 @@ var styles2 = {
 
 }
 
-class Cantidades extends Component{
+class CantidadesGrafico extends Component{
 
  
   constructor(){
@@ -122,4 +122,4 @@ class Cantidades extends Component{
 }
 
 
-export default Cantidades;
+export default CantidadesGrafico;

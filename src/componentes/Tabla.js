@@ -18,7 +18,7 @@ render(){
     <tr>
       
 
-      {this.props.datos.variables.map(elem => {
+      {this.props.datos.cabecera.map(elem => {
 
                     return(
                        

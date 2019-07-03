@@ -34,7 +34,8 @@ constructor(props){
     res:'',
     restricciones:[],
     variables:[],
-    tablaFinal:[]
+    tablaFinal:[],
+    cabecera:[]
     
 
   }
@@ -132,7 +133,7 @@ agregarDatos(result){
     console.log(tablaFinal);
     */
 
-   /* var objetivo = "";
+    var objetivo = "";
     for(var i=1; i<vars; i++){
       var aux = "ZX"+i;
       
@@ -164,11 +165,27 @@ agregarDatos(result){
       arreglo[z-1] = restric;
 
     }
-  simplex(objetivo,arreglo);
+  var a = simplex(objetivo,arreglo);
+
+  a = a.tableaus;
+
+  var resguardoArrVars = a[a.length-1].variables;
+
+  var b = [];
+  //b[0] = resguardoArrVars;
+
+  for(var x = 0; x<=(a[a.length-1].rows.length-1); x++){
+
+    b[x] = a[a.length-1].rows[x]
+
+  }
+
 
   console.log(objetivo);
   console.log(arreglo);
-  */
+  console.log(a);
+  console.log(b);
+  
 
   var ecuaciones = [];
   var ecuacion = estado["tipoOpt"] + ": ";
@@ -200,6 +217,16 @@ agregarDatos(result){
   //modelo[optmize] = 
   console.log(ecuaciones);
   lpSolver(ecuaciones);
+  this.setState({
+
+    vars:vars,
+    res:rest,
+    restricciones:prop.restricciones,
+    variables:prop.variables,
+    tablaFinal:b,
+    cabecera: resguardoArrVars
+
+  });
 
   }
 
