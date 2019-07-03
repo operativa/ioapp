@@ -10,7 +10,7 @@ const simplex = require('./simplex-solv');
 const simplex2 = require('./simple-simplex');
 const lpSolver = require('./lpSolver') ;
 
-var lobo;
+//var lobo;
 
 var styles2 = {
 
