@@ -8,7 +8,6 @@ import d3 from "d3";
 
 import {Route, Link, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Condiciones from './Condiciones';
-import Tabla from './Tabla'
 
 window.d3 = d3;
 const functionPlot = require("function-plot");
@@ -24,25 +23,117 @@ require('nerdamer/Solve.js');
 
 
 
-//PRIMERO MODELO EL CASO PARA CUANDO SON TODOS <= (menor o igual)..
-
-//var funciones = {fun0: '3*x', fun1: 'x+5', fun2: '15-7x'};
-
 
 
 class Graf extends React.Component{
 
     render(){
+    
+    
+    
+    
+    console.log("PROOOOOOOPS: ");
+    console.log(this.props.datos);
+    
+    
+    
+//PRIMERO MODELO EL CASO PARA CUANDO SON TODOS <= (menor o igual)..
 
+//var funciones = []
+//{fun0: '', fun1: '', fun2: ''};
 
-var funciones = {};
-for(var m=1; m<=this.props.datos.res; m++ ){
-
-var ecuac = "("+this.props.datos.datosGraf["valorRestR"+m]+"/"+this.props.datos.datosGraf["R"+m+"X"+2]+")"+"-"+"("+this.props.datos.datosGraf["R"+m+"X"+1]+"x"+"/"+this.props.datos.datosGraf["R"+m+"X"+2]+")";
-funciones["fun"+(m-1)] = ecuac;
-
+var funcionesCant = this.props.datos.res;
+var i;
+var j;
+var str;
+var str2;
+var strInd;
+var strFinal;
+var strFun;
+var strFunFinal = "";
+var funciones = [];
+var funciones2 = [];
+for (i=0; i < funcionesCant; i++) {
+  str = 'R'+(i+1)+'X1';
+  str2 = 'R'+(i+1)+'X2';
+  strInd = 'valorRestR'+(i+1);
+  strFinal = '(-('+this.props.datos.datosGraf[str] + ')*x + (' + this.props.datos.datosGraf[strInd] + ') ) / ' + this.props.datos.datosGraf[str2];
+  
+  
+  var result = nerdamer(strFinal);
+  
+  strFun = 'fun' + (i);
+  funciones[strFun] = result.toString();
+  
+  console.log("STRFINAL VALE: ");
+  console.log(strFinal);
+  console.log(result.toString());
+  
+  /*
+  if (strFunFinal = ""){
+    strFunFinal = strFunFinal + "{ fn:" + funciones[strFun] + ", color: 'orange', restriccion: R" + i + "}"
+  }else{
+    strFunFinal = strFunFinal + ",{ fn:" + funciones[strFun] + ", color: 'orange', restriccion: R" + i + "}"
+  }
+  */
+  
+  
+  //{ fn: funciones["fun2"], color: 'orange', restriccion: "R3"},
+  
+  
+  /*
+  for (j=1; j = 2; j++) {
+    str = 'R' + j + 'X' + j;
+    this.props.datos.datosGraf[str]
+  }
+  */
+  
+  /*
+  if (funciones2.length == 0){
+    funciones2[i] = [];
+    funciones2[i].push({fn: result.toString(), color: 'orange', restriccion: "R"+i});
+  }else {
+    var obj = {fn: result.toString(), color: 'orange', restriccion: "R"+i};
+    funciones2[i].push("obj");  
+  }
+  */
+  
+  //funciones2 = [];
+  funciones.push({fn: result.toString(), color: 'orange', restriccion: "R"+(i+1)});
+  
+  
+  
+  /*
+  intersecciones[eq1] =[];
+  intersecciones[eq1].push([0,yVal]);
+  */
+  
+  //funciones2 = [];
+  funciones2.push({fn: result.toString(), color: 'orange', restriccion: "R"+i},);
+  console.log("EL ARRAY FUNCIONES TIENEEEEEE: ");
+  console.info(funciones);
+  console.log(funciones);
+  console.log(funciones.toString());
+  console.log(JSON.stringify(funciones))
+  
 }
-console.log(funciones);
+
+
+console.log("EL ARRAY DE FUNCIONES TINEEEEEE: ");
+console.info(funciones);
+
+/*
+console.log("EL ARRAY DE FUNCIONES2 ANTES DE TRATAR TINEEEEEE: ");
+console.log(JSON.stringify(funciones2))
+funciones2 = JSON.stringify(funciones2);
+//funciones2.substr(2, funciones2.toString().length);
+//funciones2.splice(funciones2.length, 1, '');
+console.log("EL ARRAY DE FUNCIONES2 DESPUES DE TRATAR TINEEEEEE: ");
+console.log(JSON.stringify(funciones2))
+*/
+
+
+
 /*
 var fun0 = '3*x';
 var fun1 = 'x+5';
@@ -50,10 +141,6 @@ var fun2 = '6';
 */
 
 //Obtengo los puntos de intersección de las funciones con el eje coordenado X
-var funcionesCant = this.props.datos.res;
-var i;
-var j;
-//var intersectX;
 var intersectY;
 var eq1;
 var eq2;
@@ -67,6 +154,8 @@ for (i=0; i < funcionesCant; i++) {
 
   eq1 = "fun" + i;
   intersectY = nerdamer(funciones[eq1], {x: 0});
+  console.log("CONTROLANDO INTER");
+  console.log(intersectY);
   yVal = eval(intersectY.toString());
   queuex.push(0);
   queuey.push(yVal);
@@ -110,7 +199,8 @@ for (i=0; i < funcionesCant; i++) {
 
       queuex.push(xVal);
       queuey.push(yVal);
-
+    console.log("VIGILANTEEEE");
+    console.log(queuex);
       intersecciones[eq1].push([xVal,yVal]);
       intersecciones[eq2].push([xVal,yVal]);
 
@@ -139,7 +229,7 @@ for (i=0; i < queuex.length; i++) {
     if (i != j){
       tempX2 = queuex[j];
       tempY2 = queuey[j];
-      if ( (tempX == tempX2) && (tempY == tempY2) || (tempY2 < 0) || (tempX2 < 0) ){
+      if ( ((tempX == tempX2) && (tempY == tempY2)) || ((tempY2 < 0) || (tempX2 < 0)) ){
         queuex.splice(j, 1);
         queuey.splice(j, 1);
 
@@ -422,6 +512,38 @@ for (i=0; i < finalfinqx.length; i++) {
     
   }
   
+  
+  
+  
+  
+  
+  /*
+        {
+          points: 
+
+
+            //LE PASO UN ARRAY DE ARRAYS, POR ESO SE PRESCINDE DE LOS CORCHETES DESPUES DE "points:"
+            puntos
+
+            //[0, 0], [0, 5], [0, 6], [1, 6], [2, 6], [2.5, 7.5], [0, 0]
+            //funciona
+            //eval(stringapasar),
+
+          //[2, 6],
+          //[1,6],
+           // [queuex.pop(), queuey.pop()],
+            //[0, 5],
+            //[0, 0],
+            //[1, 1]
+          ,
+      color: "red",
+      //closed: true,
+      fnType: 'points',
+      graphType: 'polyline',
+        },
+    */
+  
+  
 
 
 
@@ -453,9 +575,16 @@ for (i=0; i < finalfinqx.length; i++) {
 
 
 }
+
+
+
+funciones.push({points: puntos, color: "red", fnType: 'points', graphType: 'polyline', attr: {fill: "red"}});
+
+
 console.log("EL CONTENIDO DE PUNTOS ES: ");
 console.info(puntos);
 console.log(puntos.toString());
+
 
 //console.log("EL CONTENIDO DE STRINGAPASAR ES: ");
 //console.info(puntos);
@@ -500,47 +629,29 @@ var stringapasar = "[" + cosox + "," + cosoy + "]"
 
 //Take first value from queue
 //var value = queue.shift();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
             
       //ReactDOM.render(null, document.getElementById('root'));
       //console.log("ejecuta inicio grafico.js");
-
+    
+    
+    
+    
+    
+    var cantFunc = this.props.datos.res;
+    console.log("CANTFUNC TIENE: ");
+    console.log(cantFunc);
+    
 
       const root = document.querySelector("#root");
 
@@ -571,20 +682,14 @@ var stringapasar = "[" + cosox + "," + cosoy + "]"
         label: 'X2',
         domain: [-1, 9] },
         grid: true,
-        data: [
+        data: 
         
-
+    
+    //DESCOMENTAR PARA HACER LO DE PINTAR EL POLIGONO
+    /*
         {
           points: 
-            //eval(puntos)
 
-            //eval(puntos),
-            //[0,0]
-            /*
-            eval("[0,0]"),
-            eval("[0,5]"),
-            eval("[0,0]")
-            */
 
             //LE PASO UN ARRAY DE ARRAYS, POR ESO SE PRESCINDE DE LOS CORCHETES DESPUES DE "points:"
             puntos
@@ -600,31 +705,38 @@ var stringapasar = "[" + cosox + "," + cosoy + "]"
             //[0, 0],
             //[1, 1]
           ,
-        color: "red",
-        //closed: true,
-          fnType: 'points',
-          graphType: 'polyline',
-        attr: {
-          fill: "red"
-        }
+      color: "red",
+      //closed: true,
+      fnType: 'points',
+      graphType: 'polyline',
         },
+    */
+    
+    
+    
         
-
-        { fn: funciones["fun2"], color: 'orange', restriccion: "R3"
-        
-
-
-        },
+    /*
+    for (i=0; i < funciones2.length; i++) {
+      funciones2[i]
+    }
+    */
+    
+    //funciones2.forEach(eval())
+    eval(JSON.stringify(funciones))
+    
+    
+    
+        //{ "fn": "3*x", "color": 'orange', "restriccion": "R3"},
+    /*
         { fn: funciones['fun1'], color: 'green', restriccion: "R2" },
-          {
-            fn: funciones['fun0'],
-          color: "blue",
-          text: "3x",
-          restriccion: "R1"
-
-          }
-        ],
+          
+    {fn: funciones['fun0'], color: "blue", text: "3x", restriccion: "R1"}
+    */
+      
+      
         
+        
+    /*
         annotations: [
           {
             y: 0,
@@ -647,12 +759,14 @@ var stringapasar = "[" + cosox + "," + cosoy + "]"
             text: 'C'
           }
         ]
+    */
         
         
         
-      });
+      }
+    );
 
-      console.log(this.props.datos)
+
 
 
       return (
