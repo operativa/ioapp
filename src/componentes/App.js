@@ -2,6 +2,7 @@ import React , {Component} from 'react';
 import {render} from 'react-dom';
 import {Route, Link, BrowserRouter as Router, Switch} from 'react-router-dom'
 import Condiciones from "./Condiciones";
+import Condiciones2 from "./Condiciones2";
 import CantidadesSimplex from "./CantidadesSimplex";
 import CantidadesGrafico from "./CantidadesGrafico";
 import Tabla from "./Tabla";
@@ -36,13 +37,15 @@ constructor(props){
     restricciones:[],
     variables:[],
     tablaFinal:[],
-    cabecera:[]
+    cabecera:[],
+    datosGraf:{}
     
 
   }
   
 this.agregarDatos = this.agregarDatos.bind(this);
 this.generarSimplex = this.generarSimplex.bind(this);
+this.graficar = this.graficar.bind(this);
 
 }
 
@@ -231,6 +234,79 @@ agregarDatos(result){
 
   }
 
+  graficar(estado,vars,rest,prop){
+
+    
+
+    var ecuaciones = [];
+  var ecuacion = estado["tipoOpt"] + ": ";
+  for(var i = 1; i<=vars; i++){
+
+    ecuacion = ecuacion + estado["ZX"+i] + " " + "X" + i + " ";
+
+
+  }
+
+  ecuaciones[0] = ecuacion;
+
+ 
+ 
+ for(var z= 1; z<=rest; z++){
+   ecuacion = "";
+  for(var j = 1; j<=vars; j++){
+
+    ecuacion = ecuacion + estado["R"+z+"X"+j] + " " + "X" + j + " ";
+
+  }
+
+  ecuacion = ecuacion + estado["tipoRestR"+z] + " " + estado["valorRestR"+z]
+  ecuaciones[z] = ecuacion;
+
+ }
+  
+
+
+  var a = {};
+
+  for(var g = 1; g<=vars; g++){
+
+    a["ZX"+g] = estado["ZX"+g];
+
+  }
+
+  
+
+  for(var f = 1; f<=rest; f++){
+
+    for(var y = 1; y <= vars; y++){
+
+    a["R"+f+"X"+y] = estado["R"+f+"X"+y];
+
+    }
+
+    a["tipoRestR"+f] = estado["tipoRestR"+f];
+    a["valorRestR"+f] = estado["valorRestR"+f];
+
+  }
+
+  a["tipoOpt"] = estado["tipoOpt"];
+
+
+  console.log(ecuaciones);
+  var result = lpSolver(ecuaciones);
+
+  var w = result["_tableau"].variables
+  a["ptosoptimos"] = w;
+  a["valorOptimo"] = result.evaluation;
+
+  this.setState({datosGraf: a });
+
+  //console.log(result.bounded);
+  console.log(a)
+  console.log(this.state)
+  
+  }
+
   
 
 
@@ -295,8 +371,9 @@ render(){
     <Route exact path='/CantidadesSimplex' render={() => <CantidadesSimplex funcion={this.agregarDatos}/>}/>
     <Route exact path='/CantidadesGrafico' render={() => <CantidadesGrafico funcion={this.agregarDatos}/>}/>
     <Route exact path='/Condiciones' render={() => <Condiciones titulo={this.state} metodoSimp={this.generarSimplex}/>}/>
+    <Route exact path='/Condiciones2' render={() => <Condiciones2 titulo={this.state} graf={this.graficar}/>}/>
     <Route exact path="/Tabla" render={() => <Tabla datos={this.state} />}/>    
-	<Route exact path="/Grafico" render={() => <Grafico datos={this.state} />}/>    
+	 <Route exact path="/grafico" render={() => <Grafico datos={this.state} />}/>    
 </Switch>
 </Router>
 

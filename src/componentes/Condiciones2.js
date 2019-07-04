@@ -10,6 +10,15 @@ var styles = {
   
 };
 
+/*var styles3 = {
+
+marginLeft:'25%',
+
+width:'50%'
+
+
+}*/
+
 var styles2 = {
 
   position: 'relative',
@@ -20,7 +29,7 @@ var styles2 = {
 
 }
 
-class Condiciones extends Component{
+class Condiciones2 extends Component{
 
   constructor(){
 
@@ -81,27 +90,89 @@ class Condiciones extends Component{
 
         <form>
           
-                   
-
-            {
-            for(var i = 0; i<=this.props.restricciones.length; i++){
-
-              for(var j = 0; j<=this.props.variables.length; j++){
-
-                                     
-
-                  <input type="text" name={"Z"+elem} onChange={this.handleChange} className="form-control" style={styles} placeholder={elem} />
-                
-
-              }
-
-          }
-        }
+          
+          {"Z = "}
+            
+          {this.props.titulo.variables.map(elem => {
+                    
+                    return(
+                       
+                      
+                      <input type="text" name={"Z"+elem} onChange={this.handleChange} className="form-control" style={styles} placeholder={elem} />
+                      
+                      )
 
 
-        
 
-      
+                  })
+
+
+                } 
+
+                <input type="text" name="tipoOpt" onChange={this.handleChange} className="form-control" style={styles} placeholder="TipoOpt" />
+
+            
+
+      {this.props.titulo.restricciones.map(el => {
+      return(
+      <div>
+
+      {el+" = "}
+
+      {this.props.titulo.variables.map(elem => {
+
+                    return(
+                        
+                      
+                      <input type="text" name={el+elem} onChange={this.handleChange} className="form-control" style={styles} placeholder={elem}  />
+                      
+                      
+                      )
+
+                     
+
+                    
+
+
+                  })}
+
+
+
+ 
+<input type="text" name={"tipoRest"+el} onChange={this.handleChange} className="form-control" style={styles} placeholder="TipoRest"  />
+
+
+<input type="text" name={"valorRest"+el} onChange={this.handleChange} className="form-control" style={styles} placeholder="valor"  />
+
+
+        </div>
+        )
+      }
+              )} 
+            
+            
+           
+            
+            
+          
+            
+            
+             
+            
+            
+            
+            
+          
+          
+          
+      <Link to="/grafico">
+          <div className="form-group">
+            <button onClick={() => this.props.graf(this.state,this.props.titulo.vars,this.props.titulo.res,this.props.titulo)} className="btn btn-success btn-block" >
+              ok
+            </button>
+          </div>
+      </Link>
+          
 
         </form>
 
@@ -126,4 +197,4 @@ class Condiciones extends Component{
 
 }
 
-export default Condiciones;
+export default Condiciones2;

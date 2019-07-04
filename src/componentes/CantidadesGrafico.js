@@ -1,7 +1,7 @@
 import React , {Component} from 'react';
 import {render} from 'react-dom';
 import {Route, Link, BrowserRouter as Router, Switch} from 'react-router-dom';
-import Condiciones from './Condiciones';
+import Condiciones2 from './Condiciones2';
 //import Condiciones2 from './Condiciones2';
 import App from './App';
 
@@ -92,7 +92,7 @@ class CantidadesGrafico extends Component{
                       
                       
           <div className="form-group">
-            <Link to="/Condiciones">
+            <Link to="/Condiciones2">
             <button ref={this.botonaso} type="submit" onClick={() => this.props.funcion(this.state)} className="btn btn-success btn-block">
               ok
             </button>
