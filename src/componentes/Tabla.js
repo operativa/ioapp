@@ -17,7 +17,7 @@ class Tabla extends Component{
 
 
 render(){
-  if(this.props.datos.tipoOpt == "max"){
+  if((this.props.datos.tipoOpt == "max") && (typeof this.props.datos.tablaFinal != 'undefined')){
   return(
 
 <div>
@@ -84,6 +84,7 @@ render(){
    
 </table>
 
+<p><strong>{this.props.datos.optimo}</strong></p>
 <p><strong>Valor Optimo: {this.props.datos.valorOpt}</strong></p>
 
 {this.props.datos.ptosOpt.map(e1 => {
@@ -115,7 +116,7 @@ return(
   <div className="container text-center my-auto">
   <div className="container p-4">
   
-
+<p><strong>{this.props.datos.optimo}</strong></p>
 <p><strong>Valor Optimo: {this.props.datos.valorOpt}</strong></p>
 
 {this.props.datos.ptosOpt.map(e1 => {

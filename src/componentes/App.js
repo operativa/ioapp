@@ -40,7 +40,9 @@ constructor(props){
     cabecera:[],
     datosGraf:{},
     ptosOpt:[],
-    valorOpt:""
+    valorOpt:"",
+    optimo:""
+
     
 
   }
@@ -120,13 +122,18 @@ agregarDatos(result){
     }
   var a = simplex(objetivo,arreglo);
 
+  if(typeof a != 'undefined'){
   a = a.tableaus;
-
   var resguardoArrVars = a[a.length-1].variables;
+  }
 
-  var b = [];
-  //b[0] = resguardoArrVars;
+  
+  var b
+  if(typeof a != 'undefined'){
+  b = [];
+    //b[0] = resguardoArrVars;
 
+  
   for(var x = 0; x<=(a[a.length-1].rows.length-1); x++){
 
     b[x] = a[a.length-1].rows[x]
@@ -139,6 +146,7 @@ agregarDatos(result){
   console.log(a);
   console.log(b);
   
+}
   
 
   var ecuaciones = [];
@@ -189,18 +197,14 @@ agregarDatos(result){
   this.setState({ptosOpt: result["_tableau"].variables});
   this.setState({valorOpt: result.evaluation});
   this.setState({tipoOpt: estado["tipoOpt"]});
-
+  if(result.feasible){
+  this.setState({optimo: "Problema Con Solucion"})}else{this.setState({optimo: "Problema Sin Solucion"})}
+  //console.log(this.state)
 
 
   }
 
   graficar(estado,vars,rest,prop){
-
-    
-
-
-
-
 
 
 if(estado["tipoOpt"] == "max" ){
@@ -238,10 +242,14 @@ if(estado["tipoOpt"] == "max" ){
     }
   var a = simplex(objetivo,arreglo);
 
+  if(typeof a != 'undefined'){
   a = a.tableaus;
-
   var resguardoArrVars = a[a.length-1].variables;
+  }
 
+  var b
+  
+  if(typeof a != 'undefined'){
   var b = [];
   //b[0] = resguardoArrVars;
 
@@ -253,24 +261,8 @@ if(estado["tipoOpt"] == "max" ){
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    var ecuaciones = [];
+}
+  var ecuaciones = [];
   var ecuacion = estado["tipoOpt"] + ": ";
   for(var i = 1; i<=vars; i++){
 
@@ -331,11 +323,14 @@ if(estado["tipoOpt"] == "max" ){
   a["ptosoptimos"] = w;
   a["valorOptimo"] = result.evaluation;
 
+
   this.setState({datosGraf: a });
   this.setState({tablaFinal: b, cabecera: resguardoArrVars});
-
-  //console.log(result.bounded);
-  //console.log(a)
+  this.setState({ptosOpt: result["_tableau"].variables});
+  this.setState({valorOpt: result.evaluation});
+  this.setState({tipoOpt: estado["tipoOpt"]});
+  if(result.feasible){
+  this.setState({optimo: "Problema Con Solucion"})}else{this.setState({optimo: "Problema Sin Solucion"})}
   //console.log(this.state)
   
   }

@@ -8,7 +8,6 @@ import d3 from "d3";
 
 import {Route, Link, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Condiciones from './Condiciones';
-import Tabla from './Tabla'
 
 window.d3 = d3;
 const functionPlot = require("function-plot");
@@ -24,25 +23,105 @@ require('nerdamer/Solve.js');
 
 
 
-//PRIMERO MODELO EL CASO PARA CUANDO SON TODOS <= (menor o igual)..
-
-//var funciones = {fun0: '3*x', fun1: 'x+5', fun2: '15-7x'};
-
 
 
 class Graf extends React.Component{
 
     render(){
+		
+		
+		
+		
+		console.log("PROOOOOOOPS: ");
+		console.log(this.props.datos);
+		
+		
+		
+//PRIMERO MODELO EL CASO PARA CUANDO SON TODOS <= (menor o igual)..
 
+var funciones = {fun0: '0', fun1: '0', fun2: '0'};
 
-var funciones = {};
-for(var m=1; m<=this.props.datos.res; m++ ){
-
-var ecuac = "("+this.props.datos.datosGraf["valorRestR"+m]+"/"+this.props.datos.datosGraf["R"+m+"X"+2]+")"+"-"+"("+this.props.datos.datosGraf["R"+m+"X"+1]+"x"+"/"+this.props.datos.datosGraf["R"+m+"X"+2]+")";
-funciones["fun"+(m-1)] = ecuac;
-
+var funcionesCant = this.props.datos.res;
+var i;
+var j;
+var str;
+var str2;
+var strInd;
+var strFinal;
+var strFun;
+var strFunFinal = "";
+var funciones2 = [];
+for (i=0; i < funcionesCant; i++) {
+	str = 'R'+(i+1)+'X1';
+	str2 = 'R'+(i+1)+'X2';
+	strInd = 'valorRestR'+(i+1);
+	strFinal = '(-('+this.props.datos.datosGraf[str] + ')*x + (' + this.props.datos.datosGraf[strInd] + ') ) / ' + this.props.datos.datosGraf[str2];
+	
+	
+	var result = nerdamer(strFinal);
+	
+	strFun = 'fun' + (i);
+	funciones[strFun] = result.toString();
+	
+	console.log("STRFINAL VALE: ");
+	console.log(strFinal);
+	console.log(result.toString());
+	
+	/*
+	if (strFunFinal = ""){
+		strFunFinal = strFunFinal + "{ fn:" + funciones[strFun] + ", color: 'orange', restriccion: R" + i + "}"
+	}else{
+		strFunFinal = strFunFinal + ",{ fn:" + funciones[strFun] + ", color: 'orange', restriccion: R" + i + "}"
+	}
+	*/
+	
+	
+	//{ fn: funciones["fun2"], color: 'orange', restriccion: "R3"},
+	
+	
+	/*
+	for (j=1; j = 2; j++) {
+		str = 'R' + j + 'X' + j;
+		this.props.datos.datosGraf[str]
+	}
+	*/
+	
+	/*
+	if (funciones2.length == 0){
+		funciones2[i] = [];
+		funciones2[i].push({fn: result.toString(), color: 'orange', restriccion: "R"+i});
+	}else {
+		var obj = {fn: result.toString(), color: 'orange', restriccion: "R"+i};
+		funciones2[i].push("obj");  
+	}
+	*/
+	
+	funciones2[i] = [];
+	funciones2[i].push({fn: result.toString(), color: 'orange', restriccion: "R"+(i+1)});
+	
+	
+	
+	/*
+	intersecciones[eq1] =[];
+  intersecciones[eq1].push([0,yVal]);
+	*/
+	
+	//funciones2 = [];
+	//funciones2.push({fn: result.toString(), color: 'orange', restriccion: "R"+i},);
+	console.log("EL ARRAY FUNCIONES2 TIENEEEEEE: ");
+	console.info(funciones2);
+	console.log(funciones2);
+	console.log(funciones2.toString());
+	console.log(JSON.stringify(funciones2))
+	
 }
-console.log(funciones);
+
+
+console.log("EL ARRAY DE FUNCIONES TINEEEEEE: ");
+console.info(funciones);
+
+
+
 /*
 var fun0 = '3*x';
 var fun1 = 'x+5';
@@ -50,10 +129,6 @@ var fun2 = '6';
 */
 
 //Obtengo los puntos de intersección de las funciones con el eje coordenado X
-var funcionesCant = this.props.datos.res;
-var i;
-var j;
-//var intersectX;
 var intersectY;
 var eq1;
 var eq2;
@@ -457,6 +532,7 @@ console.log("EL CONTENIDO DE PUNTOS ES: ");
 console.info(puntos);
 console.log(puntos.toString());
 
+
 //console.log("EL CONTENIDO DE STRINGAPASAR ES: ");
 //console.info(puntos);
 //console.log(stringapasar);
@@ -500,47 +576,29 @@ var stringapasar = "[" + cosox + "," + cosoy + "]"
 
 //Take first value from queue
 //var value = queue.shift();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
             
       //ReactDOM.render(null, document.getElementById('root'));
       //console.log("ejecuta inicio grafico.js");
-
+		
+		
+		
+		
+		
+		var cantFunc = this.props.datos.res;
+		console.log("CANTFUNC TIENE: ");
+		console.log(cantFunc);
+		
 
       const root = document.querySelector("#root");
 
@@ -609,22 +667,32 @@ var stringapasar = "[" + cosox + "," + cosoy + "]"
         }
         },
         
-
-        { fn: funciones["fun2"], color: 'orange', restriccion: "R3"
-        
-
-
-        },
-        { fn: funciones['fun1'], color: 'green', restriccion: "R2" },
-          {
+		/*
+		for (i=0; i < funciones2.length; i++) {
+			funciones2[i]
+		}
+		*/
+		
+		funciones2.forEach(eval())
+		
+		
+		
+        //{ fn: funciones["fun2"], color: 'orange', restriccion: "R3"},
+		
+        //{ fn: funciones['fun1'], color: 'green', restriccion: "R2" },
+          /*
+		  {
             fn: funciones['fun0'],
           color: "blue",
           text: "3x",
           restriccion: "R1"
 
           }
+		  */
+		  
         ],
         
+		/*
         annotations: [
           {
             y: 0,
@@ -647,17 +715,17 @@ var stringapasar = "[" + cosox + "," + cosoy + "]"
             text: 'C'
           }
         ]
+		*/
         
         
         
       });
 
-      console.log(this.props.datos)
+
 
 
       return (
-          <Tabla datos={this.props.datos} />
-          
+          ''
       );
     }
 }
