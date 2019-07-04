@@ -17,7 +17,7 @@ class Tabla extends Component{
 
 
 render(){
-
+  if(this.props.datos.tipoOpt == "max"){
   return(
 
 <div>
@@ -29,7 +29,7 @@ render(){
   
 
 
-	<table className="table table-responsive table-bordered table-dark">
+	<table className="table table-bordered table-dark">
   <thead>
     <tr>
       
@@ -84,7 +84,47 @@ render(){
    
 </table>
 
-<p><em>{this.props.datos.valorOpt}</em></p>
+<p><strong>Valor Optimo: {this.props.datos.valorOpt}</strong></p>
+
+{this.props.datos.ptosOpt.map(e1 => {
+
+
+  return(<div><p><strong>{e1.id}: {e1.value}</strong></p></div>)
+  
+
+})}
+
+
+  </div>
+  </div>
+  </header>
+</main>
+
+</div>
+
+
+
+
+)}
+else{
+return(
+  <div>
+  <main className="index">
+
+  <header className="masthead d-flex">
+  <div className="container text-center my-auto">
+  <div className="container p-4">
+  
+
+<p><strong>Valor Optimo: {this.props.datos.valorOpt}</strong></p>
+
+{this.props.datos.ptosOpt.map(e1 => {
+
+
+  return(<div><p><strong>{e1.id}: {e1.value}</strong></p></div>)
+  
+
+})}
 
 
   </div>
@@ -98,6 +138,8 @@ render(){
 
 
 )
+
+}
 
 }
 

@@ -188,6 +188,7 @@ agregarDatos(result){
 
   this.setState({ptosOpt: result["_tableau"].variables});
   this.setState({valorOpt: result.evaluation});
+  this.setState({tipoOpt: estado["tipoOpt"]});
 
 
 
@@ -196,6 +197,78 @@ agregarDatos(result){
   graficar(estado,vars,rest,prop){
 
     
+
+
+
+
+
+
+if(estado["tipoOpt"] == "max" ){
+    var objetivo = "";
+    for(var i=1; i<vars; i++){
+      var aux = "ZX"+i;
+      
+      objetivo = objetivo + estado[aux]+"X"+i + " + "; 
+
+
+    }
+
+    objetivo = objetivo + estado["ZX"+vars]+"X"+vars;
+
+    var arreglo = [];
+
+
+
+    for(var z = 1; z<=rest; z++){
+
+      var restric = "";
+
+      for(var j = 1; j<vars; j++){
+        var aux2 = "R"+z+"X"+j;
+        
+        restric = restric + estado[aux2]+"X"+j+" + ";
+
+      }
+
+      restric = restric + estado["R"+z+"X"+vars]+"X"+vars;
+      restric = restric + " " + estado["tipoRestR"+z] + " " + estado["valorRestR"+z];
+
+      arreglo[z-1] = restric;
+
+    }
+  var a = simplex(objetivo,arreglo);
+
+  a = a.tableaus;
+
+  var resguardoArrVars = a[a.length-1].variables;
+
+  var b = [];
+  //b[0] = resguardoArrVars;
+
+  for(var x = 0; x<=(a[a.length-1].rows.length-1); x++){
+
+    b[x] = a[a.length-1].rows[x]
+
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     var ecuaciones = [];
   var ecuacion = estado["tipoOpt"] + ": ";
@@ -259,10 +332,11 @@ agregarDatos(result){
   a["valorOptimo"] = result.evaluation;
 
   this.setState({datosGraf: a });
+  this.setState({tablaFinal: b, cabecera: resguardoArrVars});
 
   //console.log(result.bounded);
-  console.log(a)
-  console.log(this.state)
+  //console.log(a)
+  //console.log(this.state)
   
   }
 
