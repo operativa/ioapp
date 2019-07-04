@@ -5,6 +5,7 @@ import Condiciones from "./Condiciones";
 import CantidadesSimplex from "./CantidadesSimplex";
 import CantidadesGrafico from "./CantidadesGrafico";
 import Tabla from "./Tabla";
+import Grafico from "./Grafico";
 
 const simplex = require('./simplex-solv');
 const simplex2 = require('./simple-simplex');
@@ -295,6 +296,7 @@ render(){
     <Route exact path='/CantidadesGrafico' render={() => <CantidadesGrafico funcion={this.agregarDatos}/>}/>
     <Route exact path='/Condiciones' render={() => <Condiciones titulo={this.state} metodoSimp={this.generarSimplex}/>}/>
     <Route exact path="/Tabla" render={() => <Tabla datos={this.state} />}/>    
+	<Route exact path="/Grafico" render={() => <Grafico datos={this.state} />}/>    
 </Switch>
 </Router>
 

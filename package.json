@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3": "^3.5.17",
+    "function-plot": "^1.19.1",
     "javascript-lp-solver": "^0.4.5",
+    "nerdamer": "^0.8.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
