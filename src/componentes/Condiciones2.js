@@ -2,6 +2,7 @@ import React , {Component} from 'react';
 import {render} from 'react-dom';
 import {Route, Link, BrowserRouter as Router, Switch} from 'react-router-dom';
 
+
 var styles = {
 
   width:'10%',

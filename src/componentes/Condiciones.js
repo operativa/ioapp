@@ -164,15 +164,15 @@ class Condiciones extends Component{
             
           
           
-          //<Link to="/Tabla">
-		  <Link to="/grafico">
+          <Link to="/Tabla">
+		  
           <div className="form-group">
             <button onClick={() => this.props.metodoSimp(this.state,this.props.titulo.vars,this.props.titulo.res,this.props.titulo)} className="btn btn-success btn-block" >
               ok
             </button>
           </div>
-		  </Link>
-          //</Link>
+		  
+          </Link>
 
         </form>
 

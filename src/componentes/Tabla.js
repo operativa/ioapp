@@ -83,6 +83,10 @@ render(){
   </tbody>
    
 </table>
+
+<p><em>{this.props.datos.valorOpt}</em></p>
+
+
   </div>
   </div>
   </header>

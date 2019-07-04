@@ -38,7 +38,9 @@ constructor(props){
     variables:[],
     tablaFinal:[],
     cabecera:[],
-    datosGraf:{}
+    datosGraf:{},
+    ptosOpt:[],
+    valorOpt:""
     
 
   }
@@ -82,61 +84,8 @@ agregarDatos(result){
 
 
   generarSimplex(estado,vars,rest,prop){
-    //result2.tablaFinal = simplex();
-    //simplex2();
-    //var tablita = result2.tablaFinal;
-    //this.setState({vars:this.state.vars, res:this.state.res, restricciones: this.state.restricciones, variables: this.state.variables, tablaFinal:tablita});
-    //console.log(this.state);
-    //console.log(tablita);
-    /*var obj = {}
-    for(var i=1; i<=vars; i++){
-      var aux = "ZX"+i;
-      
-      obj["X"+i] = estado[aux]; 
-
-
-    }
-
-    var arreglo = [];
-
-    for(var z = 1; z<=rest; z++){
-
-      var obj2 = {};
-      var restriccion = {};      
-
-      for(var j = 1; j<=vars; j++){
-        var aux2 = "R"+z+"X"+j;
-        
-        obj2["X"+j] = estado[aux2];
-
-      }
-
-      restriccion['namedVector'] = obj2;
-      restriccion['constraint'] = estado["tipoRestR"+z];
-      restriccion['constant'] = estado["valorRestR"+z];
-      arreglo[z-1] = restriccion;
-
-    }
-
-    var datos = {
-
-      objective: obj,
-      constraints: arreglo,
-      optimizationType: estado.tipoOpt
-
-    }; 
-
-
-
-    console.log(rest);
-    console.log(obj);
-    console.log(arreglo)
-    console.log(datos);
-    var tablaFinal = simplex2(datos);
-    this.setState({vars:prop.vars,res:prop.res,restricciones:prop.restricciones,variables:prop.variables,tablaFinal:tablaFinal})
-    console.log(tablaFinal);
-    */
-
+    
+    if(estado["tipoOpt"] == "max" ){
     var objetivo = "";
     for(var i=1; i<vars; i++){
       var aux = "ZX"+i;
@@ -184,11 +133,12 @@ agregarDatos(result){
 
   }
 
-
+}
   console.log(objetivo);
   console.log(arreglo);
   console.log(a);
   console.log(b);
+  
   
 
   var ecuaciones = [];
@@ -217,10 +167,13 @@ agregarDatos(result){
 
  }
   
-
-  //modelo[optmize] = 
   console.log(ecuaciones);
-  lpSolver(ecuaciones);
+
+  
+  var result = lpSolver(ecuaciones);
+
+  console.log(result);
+  
   this.setState({
 
     vars:vars,
@@ -228,9 +181,15 @@ agregarDatos(result){
     restricciones:prop.restricciones,
     variables:prop.variables,
     tablaFinal:b,
-    cabecera: resguardoArrVars
+    cabecera: resguardoArrVars,
+    
 
   });
+
+  this.setState({ptosOpt: result["_tableau"].variables});
+  this.setState({valorOpt: result.evaluation});
+
+
 
   }
 
