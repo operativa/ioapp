@@ -8,6 +8,8 @@ import d3 from "d3";
 
 import {Route, Link, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Condiciones from './Condiciones';
+import Tabla from './Tabla';
+
 
 window.d3 = d3;
 const functionPlot = require("function-plot");
