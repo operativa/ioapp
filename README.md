@@ -1,1 +1,1 @@
-Para levantar la aplicacion debe ir hacia la carpeta del proyecto abrir una ventana cmd y ejecutar el comando npm start, esto levantara el servidor y podra acceder a la app poniendo en el browser la direccion localhsto:3000
+Para levantar la aplicacion debe ir hacia la carpeta del proyecto abrir una ventana cmd y ejecutar el comando npm start, esto levantara el servidor y podra acceder a la app poniendo en el browser la direccion localhost:3000
